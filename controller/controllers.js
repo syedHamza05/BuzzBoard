@@ -3,6 +3,17 @@ const utility = require('../Utility/utility')
 
 exports.Order = async(req, res) =>{
     try{
+        // let validator = Joi.object({
+        //     _id: Joi.string().required().messages({ 
+        //       '*': `item_name ${"already exist"}`
+        //     }),
+        //     name: Joi.string().required().messages({ 
+        //       '*': `item_name ${"already exist"}`
+        //     }),
+        //     name: Joi.string().required().messages({ 
+        //       '*': `item_name ${"already exist"}`
+        //     }),
+        // })
     const created_user = await Order.create(req.body)
     if(created_user){
     return await utility.success(res,created_user, "order Created")
@@ -53,17 +64,17 @@ exports.orderlist= async (req, res) =>{
                 size = 10;
             }
 
-            let skip = req.query.skip
-            let limit = req.query.limit
+            let skip =( page-1)*size
+            // let limit = req.query.limit
 
             const user = await Order.find().sort(
-                { votes: 1, _id: 1 }).skip(skip).limit(limit)
-            res.send({
+                {order_date: -1 }).skip(skip)
+            return res.send({
                 page,
                 size,
                 Info: user,
             });
-        return await utility.success(res,user)
+        
     } catch (error) {
         console.log("err",error);
     }   

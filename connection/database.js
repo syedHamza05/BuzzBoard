@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+global.autoIncrement = require('mongoose-auto-increment');
 
 const dbConnection = async()=>{
     try{
@@ -8,10 +9,13 @@ const dbConnection = async()=>{
             useUnifiedTopology: true
         }).then((conn)=>{
             console.log(`mongoDB Connected : ${conn.connection.host}`)
+            autoIncrement.initialize(conn);
         })
     }catch (error){
         console.log('error while connectingdb' + error)
     }
 }
 
-module.exports={dbConnection}
+
+
+module.exports={dbConnection,autoIncrement}
