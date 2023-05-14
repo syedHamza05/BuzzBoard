@@ -1,25 +1,20 @@
 const Order = require('../model/order')
 const utility = require('../Utility/utility')
+const Joi = require("joi")
 
 exports.Order = async(req, res) =>{
     try{
-        // let validator = Joi.object({
-        //     _id: Joi.string().required().messages({ 
-        //       '*': `item_name ${"already exist"}`
-        //     }),
-        //     name: Joi.string().required().messages({ 
-        //       '*': `item_name ${"already exist"}`
-        //     }),
-        //     name: Joi.string().required().messages({ 
-        //       '*': `item_name ${"already exist"}`
-        //     }),
-        // })
-    const created_user = await Order.create(req.body)
+        
+        let save=await new Order(req.body).save();
+        if(!req.body.order_id){
+        const created_user = await Order.findOne({_id:save._id})
+        
     if(created_user){
     return await utility.success(res,created_user, "order Created")
     }
+}
     else{
-        return await utility.failure(res, check, "Something Went Wrong")
+        return await utility.failure(res, "" , "Something Went Wrong")
     }
 } catch (error) {
     console.log("err",error);
