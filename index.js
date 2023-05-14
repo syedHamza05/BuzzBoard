@@ -17,4 +17,4 @@ app.use('/', routes)
 
 app.listen(port,()=>{
     console.log(`code is running on ${port}`)
-})
+});

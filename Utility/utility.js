@@ -7,7 +7,7 @@ module.exports = {
             data:data
         })
     },
-    failure: async(res, dmessage ="")=>{
+    failure: async(res, message ="")=>{
         return res.status(400).send({
             message: message,
         })
